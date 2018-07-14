@@ -357,7 +357,7 @@ function _redhen_contact_user_submission_validate($form, &$form_state, Contact $
   // Contact fields shown) without clobbering existing field data for a Contact
   // while allowing the User edit form to function as expected (i.e. you can
   // delete field values).
-  $form_id = $form_state->getBuildInfo()['base_form_id'];
+  $form_id = $form_state->getBuildInfo()['base_form_id'] ? $form_state->getBuildInfo()['base_form_id'] : $form_state->getBuildInfo()['form_id'];
   if ($form_id == 'user_register_form') {
     $contact = _redhen_contact_user_submission_apply($form, $form_state, $form_display, $contact, TRUE);
   }
@@ -417,7 +417,7 @@ function _redhen_contact_user_submission_apply($form, $form_state, $form_display
   // Contact is new. To determine this, we check whether the submission came
   // from the user_register_form and if it did, we check the setting that
   // determines whether we update fields on User registration.
-  $form_id = $form_state->getBuildInfo()['base_form_id'];
+  $form_id = $form_state->getBuildInfo()['base_form_id'] ? $form_state->getBuildInfo()['base_form_id'] : $form_state->getBuildInfo()['form_id'];
   if ($form_id == 'user_form' ||
     (\Drupal::config('redhen_contact.settings')->get('registration_update') &&
       $form_id == 'user_register_form') ||
@@ -425,7 +425,15 @@ function _redhen_contact_user_submission_apply($form, $form_state, $form_display
     foreach ($value_state->getValues()['form_display_' . $contact->getType()]
              as $field => $value) {
       if ($contact->hasField($field)) {
-        $contact->set($field, $value);
+        if($field == 'field_dob') {
+          $contact->set($field, $value[0]['value']->format('Y-m-d'));
+        }
+        elseif($field == 'field_address') {
+          $contact->set($field, $value[0]['address']);
+        }
+        else {
+          $contact->set($field, $value);
+        }
       }
     }
   }
