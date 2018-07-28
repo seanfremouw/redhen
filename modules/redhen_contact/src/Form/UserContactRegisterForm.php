@@ -197,6 +197,7 @@ class UserContactRegisterForm extends RegisterForm {
     $form_display = $form_state->get('form_display_' . $this->redhenEntity->getType());
     $form_display->validateFormValues($contact, $form, $form_state);
     $contact->setValidationRequired(FALSE);
+    $form_state->set('redhen_contact', $contact);
 
     $triggering_element = $form_state->getTriggeringElement();
     foreach($form_state->getErrors() as $name => $message) {
