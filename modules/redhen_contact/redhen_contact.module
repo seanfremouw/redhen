@@ -425,7 +425,7 @@ function _redhen_contact_user_submission_apply($form, $form_state, $form_display
     foreach ($value_state->getValues()['form_display_' . $contact->getType()]
              as $field => $value) {
       if ($contact->hasField($field)) {
-        if($field == 'field_dob') {
+        if($field == 'field_dob' && !empty($value[0]['value'])) {
           $contact->set($field, $value[0]['value']->format('Y-m-d'));
         }
         elseif($field == 'field_address') {
