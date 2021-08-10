@@ -371,7 +371,7 @@ class RedhenDedupeMergeForm extends FormBase {
               $query->propertyCondition('entity_id', $contact_id);
               $result = $query->execute();
               if (!empty($result)) {
-                $rel_entities = \Drupal::entityManager()->getStorage($entity_type);
+                $rel_entities = \Drupal::entityTypeManager()->getStorage($entity_type);
                 // Determine the property to change.
                 $entity_key = ($entity_type == 'redhen_engagement') ? 'contact_id' : 'entity_id';
                 foreach ($rel_entities as $rel_entity) {
@@ -409,7 +409,7 @@ class RedhenDedupeMergeForm extends FormBase {
       }
 
       // Delete old contacts.
-      \Drupal::entityManager()->getStorage('redhen_contact')->delete($contacts);
+      \Drupal::entityTypeManager()->getStorage('redhen_contact')->delete($contacts);
 
       // Set the new values on the master contact.
       foreach ($values as $id => $value) {
