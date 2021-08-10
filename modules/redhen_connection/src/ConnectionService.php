@@ -138,7 +138,7 @@ class ConnectionService implements ConnectionServiceInterface {
    * {@inheritdoc}
    */
   public function getConnectedEntities(EntityInterface $entity, $connection_type = NULL) {
-    $connected_entities = array();
+    $connected_entities = [];
 
     $type = ConnectionType::load($connection_type);
 

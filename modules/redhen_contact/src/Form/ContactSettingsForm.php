@@ -130,7 +130,7 @@ class ContactSettingsForm extends ConfigFormBase {
         ],
         '#states' => [
           'visible' => [
-            ':input[name="connect_users"]' => array('checked' => TRUE),
+            ':input[name="connect_users"]' => ['checked' => TRUE],
           ],
         ],
       ],

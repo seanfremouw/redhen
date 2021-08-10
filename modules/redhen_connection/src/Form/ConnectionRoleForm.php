@@ -114,16 +114,16 @@ class ConnectionRoleForm extends EntityForm {
     $redhen_connection_role->set('permissions', $permissions);
 
     $status = $redhen_connection_role->save();
-
+    $messenger = \Drupal::messenger();
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Connection Role.', [
+        $messenger->addMessage($this->t('Created the %label Connection Role.', [
           '%label' => $redhen_connection_role->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Connection Role.', [
+        $messenger->addMessage($this->t('Saved the %label Connection Role.', [
           '%label' => $redhen_connection_role->label(),
         ]));
     }
