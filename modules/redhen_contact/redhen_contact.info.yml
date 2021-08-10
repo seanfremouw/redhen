@@ -1,7 +1,7 @@
 name: RedHen Contact
 type: module
 description: Defines the base contact entity and features.
-core: 8.x
+core_version_requirement: ^8.7.7 || ^9
 package: RedHen
 configure: entity.redhen_contact_type.collection
 dependencies:
@@ -10,3 +10,8 @@ dependencies:
   - entity
   - field
   - views
+
+# Information added by Drupal.org packaging script on 2020-12-06
+version: '8.x-1.0-rc1'
+project: 'redhen'
+datestamp: 1607298437

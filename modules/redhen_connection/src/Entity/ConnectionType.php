@@ -66,7 +66,7 @@ class ConnectionType extends ConfigEntityBundleBase implements ConnectionTypeInt
    *
    * @var array
    */
-  protected $endpoints = array();
+  protected $endpoints = [];
 
   /**
    * {@inheritdoc}
@@ -108,11 +108,10 @@ class ConnectionType extends ConfigEntityBundleBase implements ConnectionTypeInt
    * {@inheritdoc}
    */
   public function getEndpointFields($entity_type, $bundle = NULL) {
-    $fields = array();
+    $fields = [];
     foreach ($this->endpoints as $id => $endpoint) {
       if (($endpoint['entity_type'] === $entity_type) &&
-        (!$bundle || in_array($bundle, $endpoint['bundles'])))
-      {
+        (!$bundle || in_array($bundle, $endpoint['bundles']))) {
         $fields[] = 'endpoint_' . $id;
       }
     }
@@ -124,7 +123,7 @@ class ConnectionType extends ConfigEntityBundleBase implements ConnectionTypeInt
    * {@inheritdoc}
    */
   public function getAllEndpointFields() {
-    $fields = array();
+    $fields = [];
     foreach ($this->endpoints as $id => $endpoint) {
       $fields[] = 'endpoint_' . $id;
     }

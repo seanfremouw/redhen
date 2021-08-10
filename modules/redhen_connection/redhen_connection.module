@@ -63,13 +63,13 @@ function redhen_connection_theme() {
 }
 
 /**
- * Return an associative array of Connection types to be used as an options list.
+ * Return an array of Connection types to be used as an options list.
  *
  * @return array
  *   Keyed by name with a label value.
  */
 function redhen_connection_type_options_list() {
-  $options = array();
+  $options = [];
   foreach (ConnectionType::loadMultiple() as $type) {
     $options[$type->id()] = $type->label();
   }

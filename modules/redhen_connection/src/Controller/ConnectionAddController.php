@@ -55,12 +55,12 @@ class ConnectionAddController extends ControllerBase {
       return $this->addForm($request, $type, $entity);
     }
     if (count($types) === 0) {
-      return array(
+      return [
         '#markup' => $this->t('You have not created any %bundle types yet. @link to add a new type.', [
           '%bundle' => 'Connection',
           '@link' => Link::createFromRoute($this->t('Go to the type creation page'), 'entity.redhen_connection_type.add_form'),
         ]),
-      );
+      ];
     }
     return [
       '#theme' => 'redhen_connection_content_add_list',
@@ -101,7 +101,7 @@ class ConnectionAddController extends ControllerBase {
     // Set the value of the endpoint.
     $connection_entity->set($field, $entity);
 
-    return $this->entityFormBuilder()->getForm($connection_entity, 'default', array('fixed_endpoint' => $field));
+    return $this->entityFormBuilder()->getForm($connection_entity, 'default', ['fixed_endpoint' => $field]);
   }
 
   /**
@@ -116,8 +116,8 @@ class ConnectionAddController extends ControllerBase {
    *   The page title.
    */
   public function getAddFormTitle(EntityInterface $redhen_connection_type, EntityInterface $entity) {
-    return t('Create @type connection for @entity',
-      array('@type' => $redhen_connection_type->label(), '@entity' => $entity->label())
+    return t('Create @type Connection for @entity',
+      ['@type' => $redhen_connection_type->label(), '@entity' => $entity->label()]
     );
   }
 
