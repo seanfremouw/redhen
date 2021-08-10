@@ -264,9 +264,9 @@ class UserContactRegisterForm extends RegisterForm {
 
     // Add message that new User was linked to a Contact.
     $message = t('User has been linked to the contact %name.',
-      array(
+      [
         '%name' => $contact->label(),
-      )
+      ]
     );
     // Only display this message to CRM admins to avoid confusion.
     $user = $this->currentUser();

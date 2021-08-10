@@ -10,7 +10,7 @@ class UserEditRoutes {
    * {@inheritdoc}
    */
   public function routes() {
-    $routes = array();
+    $routes = [];
     // Declares a single route under the name 'example.content'.
     // Returns an array of Route objects.
     $path = '/user/{user}/edit/redhen_contact';
