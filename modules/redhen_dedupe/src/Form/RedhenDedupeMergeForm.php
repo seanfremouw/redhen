@@ -39,7 +39,7 @@ class RedhenDedupeMergeForm extends FormBase {
 
     // Loop through the entities to build out our master entity options:
     foreach ($contacts as $ent_id => $entity) {
-      $updated = format_date($entity->getChangedTime(), 'short');
+      $updated = \Drupal::service('date.formatter')->format($entity->getChangedTime(), 'short');
       $master_options[$ent_id] = $this->t('@name (Updated: @date)', [
         '@date' => $updated,
         '@name' => $entity->label(),
@@ -88,7 +88,7 @@ class RedhenDedupeMergeForm extends FormBase {
     // Loop through the entities to build out our table headers and master
     // entity options:
     foreach ($contacts as $ent_id => $contact) {
-      $updated = format_date($contact->getChangedTime(), 'short');
+      $updated = \Drupal::service('date.formatter')->format($contact->getChangedTime(), 'short');
       $header_data = [
         '@date' => $updated,
         '@name' => $contact->label(),
