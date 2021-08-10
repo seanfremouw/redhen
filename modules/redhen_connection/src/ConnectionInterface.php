@@ -13,6 +13,7 @@ use Drupal\redhen_contact\ContactInterface;
  * @ingroup redhen_connection
  */
 interface ConnectionInterface extends ContentEntityInterface, EntityChangedInterface {
+
   /**
    * Gets the Connection type.
    *

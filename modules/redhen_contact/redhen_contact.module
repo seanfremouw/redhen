@@ -61,7 +61,7 @@ function redhen_contact_theme() {
  * Implements hook_tokens().
  */
 function redhen_contact_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
-  $replacements = array();
+  $replacements = [];
 
   if (($type == 'entity') && isset($data['entity_type']) && ($data['entity_type'] == 'redhen_contact')) {
 
@@ -98,41 +98,41 @@ function redhen_contact_tokens($type, $tokens, array $data, array $options, Bubb
  * Implements hook_token_info().
  */
 function redhen_contact_token_info() {
-  $type = array(
+  $type = [
     'name' => t('Contact'),
     'description' => t('Tokens related to an individual Contacts.'),
     'needs-data' => 'redhen_contact',
-  );
+  ];
 
-  $redhen_contact['id'] = array(
+  $redhen_contact['id'] = [
     'name' => t('Contact ID'),
     'description' => t('The unique ID of the Contact.'),
-  );
+  ];
 
-  $redhen_contact['name'] = array(
+  $redhen_contact['name'] = [
     'name' => t('Contact Name'),
     'description' => t('The name of the Contact.'),
-  );
+  ];
 
-  $redhen_contact['type'] = array(
+  $redhen_contact['type'] = [
     'name' => t('Contact Type'),
     'description' => t('The type (bundle) of the Contact.'),
-  );
+  ];
 
-  $redhen_contact['status'] = array(
+  $redhen_contact['status'] = [
     'name' => t('Contact Status'),
     'description' => t('The status of the Contact.'),
-  );
+  ];
 
-  $redhen_contact['created'] = array(
+  $redhen_contact['created'] = [
     'name' => t('Contact Created'),
     'description' => t('The timestamp the Contact was created.'),
-  );
+  ];
 
-  return array(
-    'types' => array('redhen_contact' => $type),
-    'tokens' => array('redhen_contact' => $redhen_contact),
-  );
+  return [
+    'types' => ['redhen_contact' => $type],
+    'tokens' => ['redhen_contact' => $redhen_contact],
+  ];
 }
 
 /**
@@ -142,7 +142,7 @@ function redhen_contact_token_info() {
  *   Keyed by name with a label value.
  */
 function redhen_contact_type_options_list() {
-  $options = array();
+  $options = [];
   foreach (ContactType::loadMultiple() as $type) {
     $options[$type->id()] = $type->label();
   }
@@ -167,10 +167,10 @@ function redhen_contact_entity_type_build(array &$entity_types) {
  * Implements hook_entity_extra_field_info().
  */
 function redhen_contact_entity_extra_field_info() {
-  $fields = array();
+  $fields = [];
   $user_fields = &$fields['user']['user']['form'];
 
-  $contact_fields = \Drupal::entityManager()->getFieldDefinitions('redhen_contact', 'contact');
+  $contact_fields = \Drupal::service('entity_field.manager')->getFieldDefinitions('redhen_contact', 'contact');
   foreach ($contact_fields as $field_name => $field) {
     if ($field->isDisplayConfigurable('form')) {
       $user_fields[$field_name] = [
@@ -397,7 +397,6 @@ function _redhen_contact_user_submission_validate($form, &$form_state, Contact $
  *   Status message.
  */
 function _redhen_contact_user_submission_apply($form, $form_state, $form_display, Contact $contact, $limit_values = FALSE) {
-
   // Limit field values updated on the Contact to only the fields with non-empty
   // values from the submitted form. Use this option if you don't want to
   // clobber pre-existing field values with empty field values from the form.
@@ -459,14 +458,14 @@ function redhen_contact_user_registration_form_state(array $form, FormStateInter
   $limited_state = clone $form_state;
   // Reset values element since we'll be rebuilding it below.
   $field_parent_name = 'form_display_' . $form_state->get('redhen_contact')->getType();
-  $limited_state->setValues(array($field_parent_name => []));
+  $limited_state->setValues([$field_parent_name => []]);
 
   // Get Redhen Contact field definitions to determine default values.
-  $contact_fields = \Drupal::entityManager()->getFieldDefinitions('redhen_contact', $contact_type);
+  $contact_fields = \Drupal::service('entity_field.manager')->getFieldDefinitions('redhen_contact', $contact_type);
 
   // Get all Redhen contact field values.
   $field_values = $form_state->getValue($field_parent_name);
-  $limited_field_values = array();
+  $limited_field_values = [];
 
   // Loop through all Redhen contact field values.
   foreach ($field_values as $key => $value) {
@@ -494,7 +493,7 @@ function redhen_contact_user_registration_form_state(array $form, FormStateInter
  *
  * @param object $definition
  *   The field definition as returned by
- *   \Drupal::entityManager()->getFieldDefinitions
+ *   \Drupal::service('entity_field.manager')->getFieldDefinitions()
  * @param array $value
  *   The field value in the submitted form state.
  *

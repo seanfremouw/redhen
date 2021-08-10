@@ -18,23 +18,23 @@ class OrgTypeForm extends EntityForm {
     $form = parent::form($form, $form_state);
 
     $redhen_org_type = $this->entity;
-    $form['label'] = array(
+    $form['label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Label'),
       '#maxlength' => 255,
       '#default_value' => $redhen_org_type->label(),
       '#description' => $this->t("Label for the org type."),
       '#required' => TRUE,
-    );
+    ];
 
-    $form['id'] = array(
+    $form['id'] = [
       '#type' => 'machine_name',
       '#default_value' => $redhen_org_type->id(),
-      '#machine_name' => array(
+      '#machine_name' => [
         'exists' => '\Drupal\redhen_org\Entity\OrgType::load',
-      ),
+      ],
       '#disabled' => !$redhen_org_type->isNew(),
-    );
+    ];
 
     /* You will need additional form elements for your custom properties. */
 
@@ -50,13 +50,13 @@ class OrgTypeForm extends EntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Org type.', [
+        $this->messenger()->addMessage($this->t('Created the %label Org type.', [
           '%label' => $redhen_org_type->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Org type.', [
+        $this->messenger()->addMessage($this->t('Saved the %label Org type.', [
           '%label' => $redhen_org_type->label(),
         ]));
     }

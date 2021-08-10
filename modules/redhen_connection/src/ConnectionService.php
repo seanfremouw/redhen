@@ -62,12 +62,12 @@ class ConnectionService implements ConnectionServiceInterface {
    * {@inheritdoc}
    */
   public function getConnectionTypes(EntityInterface $entity, EntityInterface $entity2 = NULL) {
-    $query = $this->entityQuery->get('redhen_connection_type');
+    $query = $this->entityTypeManager->getStorage('redhen_connection_type')->getQuery();
     $or_group = $query->orConditionGroup();
     $entity_type = $entity->getEntityTypeId();
 
     if (empty($entity2)) {
-      // Single entity provided
+      // Single entity provided.
       $or_group->condition('endpoints.1.entity_type', $entity_type);
       $or_group->condition('endpoints.2.entity_type', $entity_type);
     }
@@ -100,7 +100,7 @@ class ConnectionService implements ConnectionServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function getConnections(EntityInterface $entity, EntityInterface $entity2 = NULL, $connection_type = NULL, $active = TRUE, $sort = array(), $offset = 0, $limit = 0) {
+  public function getConnections(EntityInterface $entity, EntityInterface $entity2 = NULL, $connection_type = NULL, $active = TRUE, $sort = [], $offset = 0, $limit = 0) {
     $connections = [];
 
     $query = $this->buildQuery($entity, $entity2, $connection_type, $active);
@@ -138,7 +138,7 @@ class ConnectionService implements ConnectionServiceInterface {
    * {@inheritdoc}
    */
   public function getConnectedEntities(EntityInterface $entity, $connection_type = NULL) {
-    $connected_entities = array();
+    $connected_entities = [];
 
     $type = ConnectionType::load($connection_type);
 
