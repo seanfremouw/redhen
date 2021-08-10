@@ -62,12 +62,12 @@ class ConnectionService implements ConnectionServiceInterface {
    * {@inheritdoc}
    */
   public function getConnectionTypes(EntityInterface $entity, EntityInterface $entity2 = NULL) {
-    $query = $this->entityQuery->get('redhen_connection_type');
+    $query = $this->entityTypeManager->getStorage('redhen_connection_type')->getQuery();
     $or_group = $query->orConditionGroup();
     $entity_type = $entity->getEntityTypeId();
 
     if (empty($entity2)) {
-      // Single entity provided
+      // Single entity provided.
       $or_group->condition('endpoints.1.entity_type', $entity_type);
       $or_group->condition('endpoints.2.entity_type', $entity_type);
     }
