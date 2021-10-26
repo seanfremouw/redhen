@@ -37,12 +37,12 @@ class ConnectionViewsData extends EntityViewsData implements EntityViewsDataInte
 
   protected function setViewsData($entity_type_id, $endpoint, &$data) {
     /** @var \Drupal\Core\Entity\EntityTypeInterface $entity_type */
-    $entity_type = $this->entityManager->getDefinition($entity_type_id);
+    $entity_type = \Drupal::entityTypeManager()->getDefinition($entity_type_id);
     $data['redhen_connection']["{$entity_type_id}_{$endpoint}"] = [
       'relationship' => [
         'title' => $entity_type->getLabel(),
         'help' => t('The related @entity_type as endpoint @endpoint.', [
-          '@entity_type' => $entity_type->getLowercaseLabel(),
+          '@entity_type' => $entity_type->getSingularLabel(),
           '@endpoint' => $endpoint,
          ]),
         'base' => $entity_type->getDataTable() ?: $entity_type->getBaseTable(),

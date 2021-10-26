@@ -29,13 +29,6 @@ class ConnectionService implements ConnectionServiceInterface {
   protected $entityTypeManager;
 
   /**
-   * The entity query.
-   *
-   * @var \Drupal\Core\Entity\Query\QueryFactory
-   */
-  protected $entityQuery;
-
-  /**
    * The database connection to use.
    *
    * @var \Drupal\Core\Database\Connection
@@ -47,14 +40,11 @@ class ConnectionService implements ConnectionServiceInterface {
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity manager.
-   * @param \Drupal\Core\Entity\Query\QueryFactory $entity_query
-   *   The entity query.
    * @param \Drupal\Core\Database\Connection $connection
    *   The database connection.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, QueryFactory $entity_query, DBConnection $connection) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, DBConnection $connection) {
     $this->entityTypeManager = $entity_type_manager;
-    $this->entityQuery = $entity_query;
     $this->connection = $connection;
   }
 
@@ -268,8 +258,7 @@ class ConnectionService implements ConnectionServiceInterface {
     $types = ($connection_type) ? [$connection_type => ConnectionType::load($connection_type)] : $this->getConnectionTypes($entity, $entity2);
 
     /** @var QueryInterface $query */
-    $query = $this->entityQuery->get('redhen_connection');
-
+    $query = $this->entityTypeManager->getStorage('redhen_connection')->getQuery();
     // Add condition for the connection status.
     if ($active) {
       $query->condition('status', 1);

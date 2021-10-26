@@ -55,9 +55,9 @@ function drush_redhen_contact_link_users($check = 50) {
     }
   }
   if (empty($log) && count($results) == $check) {
-    drush_print("No User/Contact connections were created from " . count($results) . " Users found without Contacts. You may want to re-run this function with a higher limit.");
+    Drush::output()->writeln("No User/Contact connections were created from " . count($results) . " Users found without Contacts. You may want to re-run this function with a higher limit.");
   }
   else {
-    drush_print(count($log) . " User/Contact connections created from " . count($results) . " Users found without Contacts.");
+    Drush::output()->writeln(count($log) . " User/Contact connections created from " . count($results) . " Users found without Contacts.");
   }
 }

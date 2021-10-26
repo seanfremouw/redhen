@@ -4,6 +4,7 @@ namespace Drupal\redhen_connection\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class ConnectionTypeForm.
@@ -11,6 +12,21 @@ use Drupal\Core\Form\FormStateInterface;
  * @package Drupal\redhen_connection\Form
  */
 class ConnectionTypeForm extends EntityForm {
+
+  /**
+   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
+   */
+  protected $entityTypeBundleInfo;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    $instance = parent::create($container);
+    $instance->entityTypeBundleInfo = $container->get('entity_type.bundle.info');
+    return $instance;
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -148,7 +164,7 @@ class ConnectionTypeForm extends EntityForm {
    * @return array
    */
   protected function getBundleOptions($endpoint_type) {
-    $bundles = $this->entityManager->getBundleInfo($endpoint_type);
+    $bundles = $this->entityTypeBundleInfo->getBundleInfo($endpoint_type);
     $bundle_options = [];
     foreach ($bundles as $bundle_name => $bundle_info) {
       $bundle_options[$bundle_name] = $bundle_info['label'];

@@ -11,7 +11,7 @@ dependencies:
   - field
   - views
 
-# Information added by Drupal.org packaging script on 2021-05-20
-version: '8.x-1.0-rc6'
+# Information added by Drupal.org packaging script on 2021-08-31
+version: '8.x-1.0-rc7'
 project: 'redhen'
-datestamp: 1621498002
+datestamp: 1630446945

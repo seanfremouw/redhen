@@ -55,7 +55,7 @@ class UserContactRegisterForm extends RegisterForm {
   protected function init(FormStateInterface $form_state) {
     $this->redhenConfig = $this->config('redhen_contact.settings');
     $redhen_entity_bundle = $this->redhenConfig->get('registration_type');
-    $this->redhenEntity = $this->entityManager
+    $this->redhenEntity = $this->entityTypeManager
       ->getStorage('redhen_contact')
       ->create(['type' => $redhen_entity_bundle]);
     parent::init($form_state);
@@ -105,7 +105,7 @@ class UserContactRegisterForm extends RegisterForm {
         $form['email']['#access'] = FALSE;
       }
       else {
-        drupal_set_message(t('Invalid RedHen contact type parameter.'));
+        \Drupal::messenger()->addMessage(t('Invalid RedHen contact type parameter.'));
       }
     }
   }
@@ -271,7 +271,7 @@ class UserContactRegisterForm extends RegisterForm {
     // Only display this message to CRM admins to avoid confusion.
     $user = $this->currentUser();
     if ($user->hasPermission('administer contact entities')) {
-      drupal_set_message($message);
+      \Drupal::messenger()->addMessage($message);
     }
   }
 
