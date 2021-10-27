@@ -1,5 +1,5 @@
 {
-  "name": "drupal/redhen",
+  "name": "seanfremouw/redhen",
   "type": "drupal-module",
   "description": "RedHen CRM",
   "keywords": ["Drupal"],
@@ -7,8 +7,7 @@
   "homepage": "https://www.drupal.org/project/redhen",
   "minimum-stability": "dev",
   "support": {
-    "issues": "https://drupal.org/project/issues/redhen",
-    "source": "http://cgit.drupalcode.org/redhen"
+    "issues": "https://drupal.org/project/issues/redhen"
   },
   "require": { }
 }
