@@ -170,7 +170,9 @@ function redhen_connection_entity_delete(EntityInterface $entity) {
     $connections = \Drupal::service('redhen_connection.connections')->getConnections($entity, NULL, NULL, FALSE);
     foreach ($connections as $connection) {
       /** @var ConnectionInterface $connection */
-      $connection->delete();
+      //Not strictly needed for HFNY as connections should get deleted in SF first
+      //Could enable again when buildQuery in redhen_connection.connections service is fixed for single entites
+      //$connection->delete();
     }
   }
 }
