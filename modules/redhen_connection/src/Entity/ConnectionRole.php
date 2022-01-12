@@ -35,6 +35,14 @@ use Drupal\redhen_connection\ConnectionRoleInterface;
  *     "edit-form" = "/admin/structure/redhen/connection_type/{redhen_connection_type}/role/{redhen_connection_role}/edit",
  *     "delete-form" = "/admin/structure/redhen/connection_type/{redhen_connection_type}/role/{redhen_connection_role}/delete",
  *     "collection" = "/admin/structure/redhen/connection_type/{redhen_connection_type}/role"
+ *   },
+ *   config_export = {
+ *     "uuid",
+ *     "status",
+ *     "id",
+ *     "label",
+ *     "connection_type",
+ *     "permissions"
  *   }
  * )
  */
