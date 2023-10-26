@@ -1,7 +1,7 @@
 name: RedHen Dedupe
 type: module
 description: Provides RedHen contact deduping functionality.
-core_version_requirement: ^8.7.7 || ^9
+core_version_requirement: ^8.7.7 || ^9 || ^10
 package: RedHen
 dependencies:
   - redhen_contact

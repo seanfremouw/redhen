@@ -79,7 +79,7 @@ class RedhenDedupeMergeForm extends FormBase {
       '#type' => 'fieldset',
       '#title' => $this->t('Master contact details'),
       'preview' => [
-        '#markup' => render($preview),
+        '#markup' => \Drupal::service('renderer')->render($preview),
       ],
     ];
 

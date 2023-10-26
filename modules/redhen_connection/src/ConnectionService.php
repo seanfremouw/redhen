@@ -52,7 +52,7 @@ class ConnectionService implements ConnectionServiceInterface {
    * {@inheritdoc}
    */
   public function getConnectionTypes(EntityInterface $entity, EntityInterface $entity2 = NULL) {
-    $query = $this->entityTypeManager->getStorage('redhen_connection_type')->getQuery();
+    $query = $this->entityTypeManager->getStorage('redhen_connection_type')->getQuery()->accessCheck(TRUE);
     $or_group = $query->orConditionGroup();
     $entity_type = $entity->getEntityTypeId();
 
