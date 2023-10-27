@@ -25,7 +25,7 @@ class ContactEmailUniqueValidator extends ConstraintValidator {
       // $id must not be null or the entityQuery will never return results.
       $id = $this->context->getValue()->getParent()->getValue()->id->value === NULL ? 0 : $this->context->getValue()->getParent()->getValue()->id->value;
       // Query to find out if email is taken.
-      $email_taken = (bool) \Drupal::entityQuery('redhen_contact')
+      $email_taken = (bool) \Drupal::entityQuery('redhen_contact')->accessCheck(TRUE)
         ->condition('email', $email)
         // Exclude current contact from query because it will have the email.
         ->condition('id', $id, '!=')

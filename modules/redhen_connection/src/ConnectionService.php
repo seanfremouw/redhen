@@ -258,7 +258,7 @@ class ConnectionService implements ConnectionServiceInterface {
     $types = ($connection_type) ? [$connection_type => ConnectionType::load($connection_type)] : $this->getConnectionTypes($entity, $entity2);
 
     /** @var QueryInterface $query */
-    $query = $this->entityTypeManager->getStorage('redhen_connection')->getQuery();
+    $query = $this->entityTypeManager->getStorage('redhen_connection')->getQuery()->accessCheck(TRUE);
     // Add condition for the connection status.
     if ($active) {
       $query->condition('status', 1);

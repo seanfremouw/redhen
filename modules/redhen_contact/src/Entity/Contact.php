@@ -261,7 +261,7 @@ class Contact extends ContentEntityBase implements ContactInterface {
     if (!$contact && !empty($account->id())) {
 
       // Find Contacts linked to the current Drupal User.
-      $query = \Drupal::entityQuery('redhen_contact');
+      $query = \Drupal::entityQuery('redhen_contact')->accessCheck(TRUE);
       $query->condition('uid', $account->id(), '=');
       $query->condition('status', $status);
       $results = $query->execute();
@@ -292,7 +292,7 @@ class Contact extends ContentEntityBase implements ContactInterface {
 
     // If we don't have a cached Contact, try to find one with the given email.
     if (!$contacts) {
-      $query = \Drupal::entityQuery('redhen_contact');
+      $query = \Drupal::entityQuery('redhen_contact')->accessCheck(TRUE);
       $query->condition('email', $email, '=');
       $query->condition('status', $status);
       $results = $query->execute();

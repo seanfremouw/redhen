@@ -6,7 +6,4 @@ package: RedHen
 dependencies:
   - redhen_contact
 
-# Information added by Drupal.org packaging script on 2021-11-10
-version: '8.x-1.0-rc8'
-project: 'redhen'
-datestamp: 1636571586
+version: '8.x-1.0-rc8-hfny'
