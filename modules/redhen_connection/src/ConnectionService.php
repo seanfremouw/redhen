@@ -51,7 +51,7 @@ class ConnectionService implements ConnectionServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function getConnectionTypes(EntityInterface $entity, EntityInterface $entity2 = NULL) {
+  public function getConnectionTypes(EntityInterface $entity, ?EntityInterface $entity2 = NULL) {
     $query = $this->entityTypeManager->getStorage('redhen_connection_type')->getQuery()->accessCheck(TRUE);
     $or_group = $query->orConditionGroup();
     $entity_type = $entity->getEntityTypeId();
@@ -90,7 +90,7 @@ class ConnectionService implements ConnectionServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function getConnections(EntityInterface $entity, EntityInterface $entity2 = NULL, $connection_type = NULL, $active = TRUE, $sort = [], $offset = 0, $limit = 0) {
+  public function getConnections(EntityInterface $entity, ?EntityInterface $entity2 = NULL, $connection_type = NULL, $active = TRUE, $sort = [], $offset = 0, $limit = 0) {
     $connections = [];
 
     $query = $this->buildQuery($entity, $entity2, $connection_type, $active);
@@ -118,7 +118,7 @@ class ConnectionService implements ConnectionServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function getConnectionCount(EntityInterface $entity, EntityInterface $entity2 = NULL, $connection_type = NULL) {
+  public function getConnectionCount(EntityInterface $entity, ?EntityInterface $entity2 = NULL, $connection_type = NULL) {
     $query = $this->buildQuery($entity, $entity2, $connection_type);
 
     return $query->count()->execute();
@@ -214,7 +214,7 @@ class ConnectionService implements ConnectionServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function checkConnectionPermission(EntityInterface $entity, $operation, AccountInterface $account = NULL) {
+  public function checkConnectionPermission(EntityInterface $entity, $operation, ?AccountInterface $account = NULL) {
     // Get connections and loop through checking for role permissions.
     $contact = Contact::loadByUser($account);
     if ($contact) {
@@ -254,7 +254,7 @@ class ConnectionService implements ConnectionServiceInterface {
    *
    * @return QueryInterface
    */
-  private function buildQuery(EntityInterface $entity, EntityInterface $entity2 = NULL, $connection_type = NULL, $active = TRUE) {
+  private function buildQuery(EntityInterface $entity, ?EntityInterface $entity2 = NULL, $connection_type = NULL, $active = TRUE) {
     $types = ($connection_type) ? [$connection_type => ConnectionType::load($connection_type)] : $this->getConnectionTypes($entity, $entity2);
 
     /** @var QueryInterface $query */

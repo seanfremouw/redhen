@@ -74,6 +74,6 @@ interface ConnectionInterface extends ContentEntityInterface, EntityChangedInter
    *
    * @return bool
    */
-  public function hasRolePermission(EntityInterface $entity, $operation, ContactInterface $contact = NULL);
+  public function hasRolePermission(EntityInterface $entity, $operation, ?ContactInterface $contact = NULL);
 
 }
