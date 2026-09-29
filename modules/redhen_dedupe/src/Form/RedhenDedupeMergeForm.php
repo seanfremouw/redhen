@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Template\Attribute;
+use Drupal\Core\Utility\Error;
 use Drupal\redhen_connection\Entity\ConnectionType;
 use Drupal\redhen_contact\Entity\Contact;
 
@@ -441,7 +442,7 @@ class RedhenDedupeMergeForm extends FormBase {
     }
     catch (Exception $e) {
       $transaction->rollback();
-      watchdog_exception('redhen_dedupe', $e);
+      Error::logException(\Drupal::logger('redhen_dedupe'), $e);
       return FALSE;
     }
   }
