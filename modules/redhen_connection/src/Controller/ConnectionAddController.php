@@ -19,6 +19,20 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ConnectionAddController extends ControllerBase {
 
   /**
+   * The entity storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
+  protected $storage;
+
+  /**
+   * The entity type storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
+  protected $typeStorage;
+
+  /**
    * Initialize entity storage.
    */
   public function __construct(EntityStorageInterface $storage, EntityStorageInterface $type_storage) {

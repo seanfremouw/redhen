@@ -18,6 +18,20 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ContactControllerBase extends ControllerBase {
 
+  /**
+   * The entity storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
+  protected $storage;
+
+  /**
+   * The entity type storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
+  protected $typeStorage;
+
   public function __construct(EntityStorageInterface $storage, EntityStorageInterface $type_storage) {
     $this->storage = $storage;
     $this->typeStorage = $type_storage;
