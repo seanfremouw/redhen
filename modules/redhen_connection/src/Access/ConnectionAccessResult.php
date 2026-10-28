@@ -32,7 +32,9 @@ abstract class ConnectionAccessResult extends AccessResult {
   public static function allowedIfHasConnectionPermission(EntityInterface $entity, AccountInterface $account, $permission) {
     /** @var ConnectionServiceInterface $connection_service */
     $connection_service = \Drupal::service('redhen_connection.connections');
-    return static::allowedIf($connection_service->checkConnectionPermission($entity, $permission, $account));
+    // checkConnectionPermission() returns an AccessResultAllowed object or
+    // NULL, and allowedIf() only accepts a bool since Drupal 11.
+    return static::allowedIf((bool) $connection_service->checkConnectionPermission($entity, $permission, $account));
   }
 
   /**
