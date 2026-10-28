@@ -277,8 +277,16 @@ class ConnectionService implements ConnectionServiceInterface {
       $entities[$entity_type2][] = $entity2;
     }
 
+    // The connection_type/endpoint groupings are built on a plain select of
+    // the base table and applied to the entity query as an id subquery. The
+    // entity query gives every condition inside an OR group its own join back
+    // to redhen_connection, which prevents index use and makes every call a
+    // full table scan (hook_entity_access() runs this per entity/operation).
+    $endpoint_query = $this->connection->select('redhen_connection', 'rc');
+    $endpoint_query->addField('rc', 'id');
+
     // Overall OR group of connection_type/endpoint groupings.
-    $endpoints_group = $query->orConditionGroup();
+    $endpoints_group = $endpoint_query->orConditionGroup();
 
     // @todo Might instead be able to query against endpoint_1.entity.type, etc.
 
@@ -289,12 +297,12 @@ class ConnectionService implements ConnectionServiceInterface {
       $endpoints[$entity_type] = $connection_type->getEndpointFields($entity_type);
 
       // Add condition for the connection_type.
-      $condition_group = $query->andConditionGroup()
+      $condition_group = $endpoint_query->andConditionGroup()
         ->condition('type', $type);
 
       // Working with 2 endpoints.
       if ($entity_type2) {
-        $group = $query->andConditionGroup();
+        $group = $endpoint_query->andConditionGroup();
         $endpoints[$entity_type2] = $connection_type->getEndpointFields($entity_type2);
 
         foreach ($endpoints as $endpoint_type => $endpoint_fields) {
@@ -304,11 +312,11 @@ class ConnectionService implements ConnectionServiceInterface {
           // Endpoints are of the same type so we need to add an additional
           // condition for the reverse structure.
           if ($x > 1) {
-            $group2 = $query->orConditionGroup();
+            $group2 = $endpoint_query->orConditionGroup();
             for ($x=count($endpoint_fields) - 1; $x >= 0; $x--) {
               $group2->condition($endpoint_fields[$x], $entities[$endpoint_type][$x]->id());
             }
-            $group = $query->orConditionGroup()
+            $group = $endpoint_query->orConditionGroup()
               ->condition($group)
               ->condition($group2);
           }
@@ -318,7 +326,7 @@ class ConnectionService implements ConnectionServiceInterface {
       }
       else {
         // Single entity.
-        $condition_group = $query->orConditionGroup();
+        $condition_group = $endpoint_query->orConditionGroup();
         foreach ($endpoints as $endpoint_type => $endpoint_fields) {
           for ($x = 0; $x < count($endpoint_fields); $x++) {
             $condition_group->condition($endpoint_fields[$x], $entity->id());
@@ -328,7 +336,8 @@ class ConnectionService implements ConnectionServiceInterface {
       $endpoints_group->condition($condition_group);
     }
     if (!empty($types)) {
-      $query->condition($endpoints_group);
+      $endpoint_query->condition($endpoints_group);
+      $query->condition('id', $endpoint_query, 'IN');
       return $query;
     }
 
